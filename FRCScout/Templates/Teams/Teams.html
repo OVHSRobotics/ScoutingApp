@@ -1,0 +1,124 @@
+﻿<div class="row">
+    <div class="col-lg-2">
+        <div class="form-group has-feedback">
+            <label class="control-label">Filter List</label>
+            <input type="search" ng-model="filterTeamsList" class="form-control" />
+            <i class="glyphicon glyphicon-remove-circle form-control-feedback" ng-click="filterTeamsList = ''"></i>
+        </div>
+        <div ng-show="loadingTeams">
+            <h6>Loading...</h6>
+            <progressbar class="progress-striped active" value="100"></progressbar>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="team in teams | filter:filterTeamsList">
+                <a ng-href="/#/Teams/{{team.Number}}">{{team.TeamName}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div ng-show="team == undefined">
+            <div class="page-header">
+                <h3>Select a team to view</h3>
+            </div>
+            <div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Add a Team
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <form ng-submit="addTeam()">
+                            <div class="form-group">
+                                <label for="newTeamNumber">Team Number</label>
+                                <input type="number" class="form-control" ng-model="newTeam.Number" id="newTeamNumber" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newTeamSchoolName">School Name</label>
+                                <input type="text" class="form-control" ng-model="newTeam.SchoolName" id="newTeamSchoolName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newTeamName">Team Name</label>
+                                <input type="text" class="form-control" ng-model="newTeam.TeamName" id="newTeamName" />
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="newTeamCity">City</label>
+                                        <input type="text" class="form-control" ng-model="newTeam.City" id="newTeamCity" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="newTeamState">State</label>
+                                        <input type="text" class="form-control" ng-model="newTeam.State" id="newTeamState" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="newTeamCountry">Country</label>
+                                        <input type="text" class="form-control" ng-model="newTeam.Country" id="newTeamCountry" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-default">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="team != undefined">
+            <div ng-show="loadingTeam">
+                <h3>Loading...</h3>
+                <progressbar class="progress-striped active" value="100"></progressbar>
+            </div>
+            <div ng-hide="loadingTeam">
+                <div class="page-header">
+                    <h3>{{team.TeamName}} (FRC Team {{team.Number}})</h3>
+                </div>
+                <div>
+                    <div class="row">
+                        Name: <editable data="team.TeamName" save="saveTeam(team)" />
+                    </div>
+                    <div class="row">
+                        School: <editable data="team.SchoolName" save="saveTeam(team)" />
+                    </div>
+                    <div class="row">
+                        Location: <editable data="team.City" save="saveTeam(team)" />, <editable data="team.State" save="saveTeam(team)" />, <editable data="team.Country" save="saveTeam(team)" />
+                    </div>
+                    <h4>Robots</h4>
+                    <button class="btn btn-default btn-sm" ng-click="addRobot(team)">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Add a Robot
+                    </button>
+                    <div ng-show="team.Robots.length == 0">
+                        No robots
+                    </div>
+                    <div ng-show="team.Robots.length > 0">
+                        <div ng-repeat="robot in team.Robots | orderBy:RobotId">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Robot {{$index + 1}} <button ng-click="deleteRobot(robot)">Delete</button>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        Autonomous Control Type:
+                                        <editable data="robot.AutonomousControlType" save="saveRobot(robot)" />
+                                    </div>
+                                    <div class="row">
+                                        Controller Type:
+                                        <editable data="robot.ControllerType" save="saveRobot(robot)" />
+                                    </div>
+                                    <div class="row">
+                                        Pictures:
+                                        Upload picture: <form><input type="file" name="userPictures" accept="image/*" multiple /><button ng-click="addPictures()">Submit</button></form>
+                                        <span ng-repeat="picture in robot.Pictures">{{picture}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

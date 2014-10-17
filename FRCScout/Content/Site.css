@@ -1,0 +1,34 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+li > a
+{
+    display: block;
+}
+
+.blue-alliance
+{
+    background: rgb(0, 0, 255);
+    background: rgba(0, 0, 255, 0.5);
+}
+
+.red-alliance
+{
+    background: rgb(255, 0, 0);
+    background: rgba(255, 0, 0, 0.5);
+}

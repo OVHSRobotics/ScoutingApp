@@ -1,0 +1,75 @@
+﻿<div class="row">
+    <div class="col-lg-2">
+        <div class="form-group has-feedback">
+            <label class="control-label">Filter List</label>
+            <input type="search" ng-model="filterMatchesList" class="form-control" />
+            <i class="glyphicon glyphicon-remove-circle form-control-feedback" ng-click="filterMatchesList = ''"></i>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="match in matches | filter:filterMatchesList">
+                <a ng-href="/#/Matches/{{match.MatchId}}">{{match.Name}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div class="page-header">
+            <h3>{{match.Name}}</h3>
+            <h5>Scheduled Time: {{ match.ScheduledTime | date:'medium' }}</h5>
+            <!--<h5>Actual Start Time: {{ match.ActualStartTime | date:'medium' }}<editable data="match.ActualStartTime" save="saveMatch()" /></h5>-->
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">{{participant.TeamNumber}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Autonomous Points</td>
+                        <td class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">
+                            <editable data="participant.AutonomousPoints" save="saveParticipant(participant)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Teleoperated Points</td>
+                        <td class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">
+                            <editable data="participant.TeleoperatedPoints" save="saveParticipant(participant)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bonus Points</td>
+                        <td class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">
+                            <editable data="participant.BonusPoints" save="saveParticipant(participant)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Penalty Points</td>
+                        <td class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">
+                            <editable data="participant.PenaltyPoints" save="saveParticipant(participant)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Team Total</td>
+                        <td class="{{participant.Alliance}}-alliance" ng-repeat="participant in match.Participants | orderBy:['Alliance', 'MatchParticipantId']">{{getTeamTotal(participant)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Alliance Penalties<br /><span class="small">(Not associated with a specific team)</span></td>
+                        <td colspan="3" class="blue-alliance">
+                            <editable data="match.UnaccountedBluePenalties" save="saveMatch(match)" />
+                        </td>
+                        <td colspan="3" class="red-alliance">
+                            <editable data="match.UnaccountedRedPenalties" save="saveMatch(match)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Alliance Total</td>
+                        <td colspan="3" class="blue-alliance">{{sumAlliancePoints(match, 'blue')}}</td>
+                        <td colspan="3" class="red-alliance">{{sumAlliancePoints(match, 'red')}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
