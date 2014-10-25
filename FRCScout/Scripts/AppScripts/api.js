@@ -49,54 +49,54 @@
     });
     var api = {
         Teams: {
-            get: function (teamNumber) {
+            get: function (teamNumber, success, error) {
                 if (teamNumber == undefined) {
-                    return teamsResource.query();
+                    return teamsResource.query({}, success, error);
                 } else {
-                    return teamsResource.get({ teamNumber: teamNumber});
+                    return teamsResource.get({ teamNumber: teamNumber}, success, error);
                 }
             },
-            add: function (team) {
-                teamsResource.create(team);
+            add: function (team, success, error) {
+                teamsResource.create(team, success, error);
             },
-            delete: function (teamNumber) {
-                teamsResource.delete({teamNumber: teamNumber})
+            delete: function (teamNumber, success, error) {
+                teamsResource.delete({ teamNumber: teamNumber }, success, error);
             },
-            update: function (team) {
-                teamsResource.update({ teamNumber: team.Number }, team);
+            update: function (team, success, error) {
+                teamsResource.update({ teamNumber: team.Number }, team, success, error);
             },
             Robots: {
-                add: function (robot) {
-                    robotsResource.create(robot);
+                add: function (robot, success, error) {
+                    robotsResource.create(robot, success, error);
                 },
-                delete: function (robotId) {
-                    robotsResource.delete({ robotId: robotId });
+                delete: function (robotId, success, error) {
+                    robotsResource.delete({ robotId: robotId }, success, error);
                 },
-                update: function (robot) {
-                    robotsResource.update(robot);
+                update: function (robot, success, error) {
+                    robotsResource.update({ robotId: robot.RobotId }, robot, success, error);
                 },
             }
         },
         Matches: {
-            get: function (matchId) {
+            get: function (matchId, success, error) {
                 if (matchId == undefined) {
-                    return matchesResource.query();
+                    return matchesResource.query({}, success, error);
                 }
                 else {
-                    return matchesResource.get({ matchId: matchId });
+                    return matchesResource.get({ matchId: matchId }, success, error);
                 }
             },
-            add: function (match) {
-                matchesResource.create(match);
+            add: function (match, success, error) {
+                matchesResource.create(match, success, error);
             },
-            delete: function (matchId) {
-                matchesResource.delete(matchId)
+            delete: function (matchId, success, error) {
+                matchesResource.delete(matchId, success, error);
             },
-            update: function (match) {
-                matchesResource.update({ matchId: match.MatchId }, match);
+            update: function (match, success, error) {
+                matchesResource.update({ matchId: match.MatchId }, match, success, error);
             },
-            updateParticipant: function (participant) {
-                $resource('api/matches/participants/:matchParticipantId', { matchParticipantId: participant.MatchParticipantId }, { update: { method: 'PUT' } }).update(participant);
+            updateParticipant: function (participant, success, error) {
+                $resource('api/matches/participants/:matchParticipantId', { matchParticipantId: participant.MatchParticipantId }, { update: { method: 'PUT' } }).update(participant, success, error);
             }
         }
     };

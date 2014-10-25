@@ -110,8 +110,16 @@
                                     </div>
                                     <div class="row">
                                         Pictures:
-                                        Upload picture: <form><input type="file" name="userPictures" accept="image/*" multiple /><button ng-click="addPictures()">Submit</button></form>
-                                        <span ng-repeat="picture in robot.Pictures">{{picture}}</span>
+                                        <div>
+                                            <form>
+                                                <input type="file" name="userPicture" file-model="userPicture" accept="image/*" multiple />
+                                                <button ng-click="addPictures(userPicture, robot)">Submit</button>
+                                            </form>
+                                        </div>
+                                        <div ng-repeat="picture in robot.Pictures" class="pull-left">
+                                            <img ng-src="{{picture.FileName}}" style="width: 150px;" />
+                                            <button class="close" aria-hidden="true" ng-click="deletePicture(picture, robot)">&times;</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

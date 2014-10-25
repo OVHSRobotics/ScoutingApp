@@ -1,1 +1,1 @@
-﻿angular.module('directives', ['directives.editable']);
+﻿angular.module('directives', ['directives.editable', 'directives.fileModel']);

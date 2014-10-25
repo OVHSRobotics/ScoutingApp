@@ -12,6 +12,9 @@ namespace FRCScout.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PictureId { get; set; }
 
-        public byte[] Bytes { get; set; }
+        public string FileName { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual Robot Robot { get; set; }
     }
 }

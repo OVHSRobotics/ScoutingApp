@@ -74,7 +74,6 @@ namespace FRCScout.Controllers
 
         // PUT: api/Teams/Robots/5
         [ResponseType(typeof(void))]
-        [HttpPut]
         [Route("api/teams/robots/{id}")]
         public async Task<IHttpActionResult> PutTeamRobot(int id, Robot robot)
         {
@@ -86,6 +85,15 @@ namespace FRCScout.Controllers
             if (id != robot.RobotId)
             {
                 return BadRequest();
+            }
+
+            foreach (Picture picture in robot.Pictures)
+            {
+                if (picture.PictureId == 0)
+                {
+                    picture.Robot = robot;
+                    db.Pictures.Add(picture);
+                }
             }
 
             db.Entry(robot).State = EntityState.Modified;
@@ -106,7 +114,7 @@ namespace FRCScout.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return this.Ok<Robot>(robot);
         }
 
         // POST: api/Teams
@@ -169,8 +177,22 @@ namespace FRCScout.Controllers
                 return NotFound();
             }
 
+            IEnumerable<Picture> pictures = db.Pictures.Where(p => p.Robot.RobotId == robot.RobotId);
+            UploadController uploadController = new UploadController();
+            foreach (Picture picture in pictures)
+            {
+                string path = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/"), picture.FileName);
+                if (System.IO.File.Exists(path))
+                {
+                    await Task.Run(() => System.IO.File.Delete(path));
+                }
+
+                db.Pictures.Remove(picture);
+            }
+
             db.Robots.Remove(robot);
-            await db.SaveChangesAsync();
+            Task dbTask = db.SaveChangesAsync();
+            await dbTask;
 
             return Ok(robot);
         }

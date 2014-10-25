@@ -1,4 +1,4 @@
-﻿angular.module('main', ['ngRoute', 'ui.utils', 'ui.bootstrap', 'directives', 'Teams', 'Matches'])
+﻿angular.module('main', ['ngRoute', 'ui.utils', 'ui.bootstrap', 'directives', 'services', 'Teams', 'Matches'])
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {

@@ -70,7 +70,7 @@ namespace FRCScout.Migrations
                 c => new
                     {
                         PictureId = c.Int(nullable: false, identity: true),
-                        Bytes = c.Binary(),
+                        FileName = c.String(),
                         Robot_RobotId = c.Int(),
                     })
                 .PrimaryKey(t => t.PictureId)

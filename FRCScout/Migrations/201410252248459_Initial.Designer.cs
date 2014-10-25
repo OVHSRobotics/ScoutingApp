@@ -13,7 +13,7 @@ namespace FRCScout.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201409201556412_Initial"; }
+            get { return "201410252248459_Initial"; }
         }
         
         string IMigrationMetadata.Source

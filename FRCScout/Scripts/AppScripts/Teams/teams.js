@@ -1,5 +1,5 @@
-﻿angular.module('Teams', ['Api'])
-.controller('TeamsController', function ($rootScope, $scope, $routeParams, $filter, Api) {
+﻿angular.module('Teams', ['Api', 'services.uploadFile'])
+.controller('TeamsController', function ($rootScope, $scope, $routeParams, $filter, Api, uploadFile) {
     $rootScope.pageTitle = "Teams";
     $scope.teams = [];
     $scope.loadingTeams = true;
@@ -30,8 +30,10 @@
 
     $scope.addRobot = function (team) {
         var robot = { TeamNumber: team.Number };
-        team.Robots.push(robot);
-        Api.Teams.Robots.add(robot);
+        Api.Teams.Robots.add(robot,
+            function (data) {
+                team.Robots.push(data);
+            });
     };
 
     $scope.saveRobot = function (robot) {
@@ -44,4 +46,42 @@
             $scope.team.Robots.splice($scope.team.Robots.indexOf(robot), 1);
         }
     };
+
+    $scope.addPictures = function (file, robot) {
+        uploadFile.uploadFile(file, "api/Upload")
+        .success(function (data) {
+            if (robot.Pictures == null)
+            {
+                robot.Pictures = [];
+            }
+
+            angular.forEach(data, function (value) {
+                robot.Pictures.push({ FileName: value });
+            });
+            Api.Teams.Robots.update(robot,
+                function (data) {
+                    robot.Pictures = data.Pictures;
+                });
+        });
+    };
+
+    $scope.deletePicture = function (file, robot) {
+        if (confirm('Are you sure?')) {
+            uploadFile.deletePicture(file.PictureId, "api/Upload")
+            .success(function (data) {
+                var index = -1;
+                for (var i = 0; i < robot.Pictures.length; i++) {
+                    if (robot.Pictures[i].PictureId == file.PictureId) {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (i >= 0) {
+                    robot.Pictures.splice(index, 1);
+                    Api.Teams.Robots.update(robot);
+                }
+            });
+        }
+    }
 });

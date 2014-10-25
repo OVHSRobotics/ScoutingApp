@@ -157,12 +157,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="CustomMultipartFormDataStreamProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201409201556412_Initial.cs" />
-    <Compile Include="Migrations\201409201556412_Initial.Designer.cs">
-      <DependentUpon>201409201556412_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201410252248459_Initial.cs" />
+    <Compile Include="Migrations\201410252248459_Initial.Designer.cs">
+      <DependentUpon>201410252248459_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Match.cs" />
@@ -233,7 +235,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Components\Directives\directives.editable.js" />
+    <Content Include="Scripts\Components\Directives\directives.fileModel.js" />
     <Content Include="Scripts\Components\Directives\directives.js" />
+    <Content Include="Scripts\Components\Services\services.js" />
+    <Content Include="Scripts\Components\Services\services.uploadFile.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -265,8 +270,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409201556412_Initial.resx">
-      <DependentUpon>201409201556412_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201410252248459_Initial.resx">
+      <DependentUpon>201410252248459_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
